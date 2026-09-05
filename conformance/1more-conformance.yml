@@ -1,0 +1,92 @@
+generated: '2026-09-05'
+method: probed
+source: >-
+  https://usa.1more.com/.well-known/ucp, https://usa.1more.com/.well-known/openid-configuration,
+  https://usa.1more.com/.well-known/oauth-protected-resource, https://usa.1more.com/api/ucp/mcp,
+  https://usa.1more.com/llms.txt
+note: >-
+  Every entry below is asserted from a document 1MORE's own host returned on
+  2026-09-05, not from a marketing claim. 1MORE publishes no compliance programme,
+  trust centre or certification list of its own, so no Compliance pointer is emitted.
+standards:
+- id: ucp-2026-08-25
+  name: Universal Commerce Protocol
+  conforms: true
+  domain_standard: true
+  evidence: >-
+    /.well-known/ucp returns ucp.version "2026-08-25" with supported_versions
+    2026-04-08 and 2026-01-23, a dev.ucp.shopping service with transport "mcp", and
+    the capability URIs dev.ucp.shopping.cart, .checkout, .fulfillment, .discount,
+    .order, .catalog.search, .catalog.lookup plus the dev.shopify.catalog extension.
+  spec: https://ucp.dev/2026-08-25/specification/overview/
+  note: >-
+    This is the domain standard for 1MORE's market surface: agent-driven retail
+    commerce. It is declared by the contract itself, not claimed in prose, and it is
+    what lets an agent that already speaks UCP transact against this store with no
+    bespoke connector.
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: >-
+    POST https://usa.1more.com/api/ucp/mcp with method "initialize" and method
+    "tools/list" both returned HTTP 200 JSON-RPC 2.0 responses; tools/list returned
+    13 tools each carrying an inputSchema.
+- id: json-schema-2020-12
+  name: JSON Schema 2020-12
+  conforms: true
+  evidence: >-
+    Every tool inputSchema in the tools/list response declares
+    "$schema": "https://json-schema.org/draft/2020-12/schema".
+- id: jsonrpc-2.0
+  conforms: true
+  evidence: MCP endpoint responses carry "jsonrpc":"2.0" and echo the request id.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-authorization-server (RFC 8414) returns authorization and
+    token endpoints for issuer https://shopify.com/authentication/11404626.
+- id: oidc
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: >-
+    /.well-known/openid-configuration returns issuer, jwks_uri, response_types_supported
+    ["code"], id_token_signing_alg_values_supported ["RS256"] and claims_supported.
+- id: rfc9728-oauth-protected-resource
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-protected-resource returns resource "https://usa.1more.com"
+    with authorization_servers[] and bearer_methods_supported ["header"].
+- id: pkce-rfc7636
+  conforms: true
+  evidence: code_challenge_methods_supported ["S256"] in the OIDC discovery document.
+- id: iso4217-minor-units
+  conforms: true
+  evidence: >-
+    Every UCP money value in the tool descriptions is an integer in ISO 4217 minor
+    units paired with a currency code.
+- id: iso3166-1-alpha-2
+  conforms: true
+  evidence: address_country fields in the checkout input schemas require 2-letter ISO 3166-1 alpha-2 codes.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returned 404 on every 1MORE host probed.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No application/problem+json surface; the agent surface uses JSON-RPC error objects.
+- id: apis-json
+  conforms: false
+  evidence: /apis.json, /apis.yml and /.well-known/apis.json all 404 on every host probed.
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json returned 404 on every host probed.
+- id: aauth
+  conforms: false
+  evidence: /.well-known/aauth-resource.json returned 404 on every host probed.
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI at any probed location on 1more.com, www.1more.com, usa.1more.com,
+    global.1more.com or www.1morestore.com. The machine-readable contract for the
+    agent surface is the MCP tools/list response and the UCP OpenRPC schema hosted
+    by ucp.dev, not a first-party OpenAPI.

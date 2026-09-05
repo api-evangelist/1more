@@ -1,0 +1,186 @@
+generated: '2026-09-05'
+method: generated
+source: mcp/1more-ucp-tools-list.json (probed tools/list, https://usa.1more.com/api/ucp/mcp) + https://usa.1more.com/agents.md
+note: 'A recommended x-agentic-access execution contract for 1MORE''s agent commerce surface, classified
+  from the 13 real MCP tools the endpoint published. This is a governance STARTING POINT authored by API
+  Evangelist, not a claim 1MORE publishes it. One classification is NOT a heuristic: complete_checkout
+  is marked human-in-the-loop required because the store itself says so in its agents.md, and it is the
+  only tool that requires an idempotency key. audience is left null to bind per deployment. Derived from
+  OpenAPI is impossible here - there is no OpenAPI - so the tool input schemas are the authority for what
+  each operation takes.'
+surface:
+  transport: mcp
+  endpoint: https://usa.1more.com/api/ucp/mcp
+  auth: none
+summary:
+  operations: 13
+  by_action_class:
+    connected: 6
+    acting: 7
+  by_consequence:
+    read: 6
+    write: 6
+    physical: 1
+  human_in_the_loop_required: 1
+operations:
+- operation: get_checkout
+  action_class: connected
+  consequence: read
+  scope: order:read
+  token:
+    max_ttl_seconds: 3600
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: optional
+  audience: null
+- operation: create_checkout
+  action_class: acting
+  consequence: write
+  scope: checkout:write
+  token:
+    max_ttl_seconds: 900
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: required
+  audience: null
+- operation: update_checkout
+  action_class: acting
+  consequence: write
+  scope: checkout:write
+  token:
+    max_ttl_seconds: 900
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: required
+  audience: null
+- operation: complete_checkout
+  action_class: acting
+  consequence: physical
+  scope: checkout:complete
+  token:
+    max_ttl_seconds: 300
+    exchange: true
+    purpose_required: true
+  escalation:
+    human_in_the_loop: required
+    basis: 'Provider-stated, not inferred: https://usa.1more.com/agents.md - "Checkout requires human
+      approval. Agents must not complete payment without explicit buyer consent."'
+  audit: required
+  idempotency:
+    required: true
+    field: meta.idempotency-key
+  audience: null
+- operation: cancel_checkout
+  action_class: acting
+  consequence: write
+  scope: checkout:write
+  token:
+    max_ttl_seconds: 900
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: required
+  audience: null
+- operation: get_cart
+  action_class: connected
+  consequence: read
+  scope: order:read
+  token:
+    max_ttl_seconds: 3600
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: optional
+  audience: null
+- operation: create_cart
+  action_class: acting
+  consequence: write
+  scope: cart:write
+  token:
+    max_ttl_seconds: 900
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: required
+  audience: null
+- operation: update_cart
+  action_class: acting
+  consequence: write
+  scope: cart:write
+  token:
+    max_ttl_seconds: 900
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: required
+  audience: null
+- operation: cancel_cart
+  action_class: acting
+  consequence: write
+  scope: cart:write
+  token:
+    max_ttl_seconds: 900
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: required
+  audience: null
+- operation: get_order
+  action_class: connected
+  consequence: read
+  scope: order:read
+  token:
+    max_ttl_seconds: 3600
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: optional
+  audience: null
+- operation: search_catalog
+  action_class: connected
+  consequence: read
+  scope: catalog:read
+  token:
+    max_ttl_seconds: 3600
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: optional
+  audience: null
+- operation: lookup_catalog
+  action_class: connected
+  consequence: read
+  scope: catalog:read
+  token:
+    max_ttl_seconds: 3600
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: optional
+  audience: null
+- operation: get_product
+  action_class: connected
+  consequence: read
+  scope: catalog:read
+  token:
+    max_ttl_seconds: 3600
+    exchange: false
+    purpose_required: false
+  escalation:
+    human_in_the_loop: not-required
+  audit: optional
+  audience: null

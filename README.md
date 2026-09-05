@@ -64,5 +64,24 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-1MORE is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/1more_stock/
+1MORE (万魔声学 / 1MORE Acoustics Technology Co., Ltd., founded 2013) is a consumer audio brand
+selling wired and wireless earbuds, on-ear and over-ear headphones and open-ear sport earbuds, with
+operations in China, the United States and the United Kingdom.
+
+**1MORE publishes no developer program and no product API.** What it does publish — and what this
+profile is built from — is a genuine agent-facing commerce surface on its own US storefront host:
+
+- `https://usa.1more.com/llms.txt` and `/agents.md` — agent instructions the store serves itself
+- `https://usa.1more.com/.well-known/ucp` — a Universal Commerce Protocol merchant profile,
+  UCP `2026-08-25`, merchant name **1MORE**, merchant origin `usa.1more.com`
+- `https://usa.1more.com/api/ucp/mcp` — a live remote **MCP** endpoint that answers `tools/list`
+  anonymously with 13 catalog, cart, checkout and order tools carrying real JSON Schema 2020-12
+  input schemas
+- OAuth 2.0 / OpenID Connect discovery documents for shopper accounts
+- read-only product JSON at `/products.json` and `/collections/{handle}/products.json`
+
+That stack is Shopify's UCP implementation running under 1MORE's own domain and merchant identity.
+The endpoint, the catalog it returns and the merchant of record are 1MORE's; the protocol
+implementation is the platform's. Every artifact here says which is which.
+
+Company sites: <https://usa.1more.com/> (US store) · <https://www.1more.com/index.html> (corporate)

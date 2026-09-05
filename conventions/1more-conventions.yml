@@ -1,0 +1,126 @@
+generated: '2026-09-05'
+method: probed
+source: >-
+  https://usa.1more.com/llms.txt, https://usa.1more.com/agents.md,
+  https://usa.1more.com/api/ucp/mcp (tools/list), https://usa.1more.com/.well-known/ucp,
+  https://usa.1more.com/policies/refund-policy
+note: >-
+  Cross-cutting semantics of 1MORE's only machine-readable surface: the UCP/MCP agent
+  commerce endpoint and the read-only product JSON endpoints on usa.1more.com. Every
+  statement below is read from a document that host returned on 2026-09-05 or from the
+  input schemas the MCP endpoint itself published. There is no first-party OpenAPI to
+  derive from.
+transport:
+  protocol: JSON-RPC 2.0 over HTTP POST (MCP)
+  endpoint: https://usa.1more.com/api/ucp/mcp
+  content_type: application/json
+  accept: application/json, text/event-stream
+  read_only_json:
+  - GET /products.json
+  - GET /products/{handle}.json
+  - GET /collections/{handle}/products.json
+  - GET /search?q={query}&type=product
+  - GET /sitemap.xml
+authentication:
+  agent_surface: none (anonymous; probed HTTP 200 with no credentials)
+  shopper_accounts: OAuth 2.0 authorization code + PKCE (S256) against Shopify customer accounts
+  detail: authentication/1more-authentication.yml
+  purchase_gate: >-
+    Not a token. The store's own agents.md states "Checkout requires human approval.
+    Agents must not complete payment without explicit buyer consent."
+idempotency:
+  supported: true
+  coverage: partial
+  scope:
+  - complete_checkout
+  mechanism: >-
+    A required `meta.idempotency-key` string ("An idempotency key for completing the
+    checkout") in the tool input schema. It is REQUIRED, not optional, on the one tool
+    that carries it.
+  header: null
+  retention: null
+  evidence: mcp/1more-ucp-tools-list.json#/result/tools - complete_checkout inputSchema.properties.meta.required
+  note: >-
+    Exactly 1 of the 7 mutating tools (create_cart, update_cart, cancel_cart,
+    create_checkout, update_checkout, cancel_checkout, complete_checkout) accepts an
+    idempotency key, and it is the money-moving one. Every other write is replay-unsafe
+    from the protocol's point of view. Coverage is therefore `partial`, not `full`,
+    even though the mechanism is mandatory where it exists and the retention window is
+    not published.
+reversibility:
+  grade: verified
+  surfaces:
+  - write_surface: complete_checkout (order placement)
+    reversal: Return / exchange for refund, initiated by email to support@1moreusa.com
+    reversal_operation: null
+    window: >-
+      "you may exchange or receive a refund of your product within 30 days of the
+      purchase date for any reason"; refunds normally processed within 10 days of receipt
+    docs: https://usa.1more.com/policies/refund-policy
+    note: >-
+      The reversal is a human customer-support flow, not an API operation - no refund
+      or cancel-order tool exists in tools/list, and get_order is read-only. Expedited
+      shipping and shipping protection are excluded from the refund. After 30 days the
+      one-year limited warranty (repair or replacement) applies instead.
+  - write_surface: create_checkout / update_checkout
+    reversal: cancel_checkout
+    reversal_operation: cancel_checkout
+    window: Before the checkout is completed; no time limit is published.
+    docs: https://usa.1more.com/agents.md
+  - write_surface: create_cart / update_cart
+    reversal: cancel_cart
+    reversal_operation: cancel_cart
+    window: Before checkout is created from the cart; no time limit is published.
+    docs: https://usa.1more.com/agents.md
+  summary: >-
+    Graded `verified` because the money-moving action has both a reversal path and a
+    stated window (30 days from purchase date, published on the store's refund policy
+    page). The in-protocol reversals (cancel_checkout, cancel_cart) are documented but
+    unbounded, which is normal for a pre-payment surface.
+dry_run_mode:
+  supported: false
+  note: No sandbox, test mode, test card or simulation surface is published for this store.
+pagination:
+  style: page-and-limit (Shopify storefront JSON) plus cursor semantics inside UCP catalog search
+  read_only_params: [limit, page]
+  note: >-
+    /products.json accepts ?limit= and ?page=. UCP catalog search paging is defined by
+    the ucp.dev catalog_search schema rather than by any 1MORE document.
+error_envelope:
+  agent_surface: JSON-RPC 2.0 error object (code, message, data) on the MCP endpoint
+  storefront: HTTP status codes; 404 pages render an HTML soft shell
+  problem_json: false
+  detail: errors/1more-problem-types.yml
+rate_limiting:
+  documented: true
+  statement: >-
+    "Respect rate limits. The MCP endpoint is rate-limited per IP. Back off on 429
+    responses." (https://usa.1more.com/llms.txt)
+  numbers_published: false
+  headers_observed: []
+  detail: rate-limits/1more-rate-limits.yml
+request_tracing:
+  header: x-request-id
+  observed: true
+  evidence: >-
+    Both the MCP endpoint and /products.json returned an `x-request-id` response header
+    on 2026-09-05 (e.g. 8459eec1-7096-42ca-98a5-3c3ea8f850b9-1788631617). A
+    `server-timing` header carries edge, region and request-id descriptors as well.
+versioning:
+  scheme: dated protocol versions negotiated through the UCP discovery document
+  current: '2026-08-25'
+  supported: ['2026-08-25', '2026-04-08', '2026-01-23']
+  detail: lifecycle/1more-lifecycle.yml
+money:
+  representation: integer minor units paired with an ISO 4217 currency code
+  example: '{"amount": 2500, "currency": "USD"} is $25.00'
+  warning: Agents must convert to major units before quoting a price to a buyer.
+buyer_context:
+  parameters: [context.address_country, context.currency]
+  note: Passed for accurate pricing and availability, per the store's llms.txt.
+cross_links:
+  authentication: authentication/1more-authentication.yml
+  errors: errors/1more-problem-types.yml
+  lifecycle: lifecycle/1more-lifecycle.yml
+  rate_limits: rate-limits/1more-rate-limits.yml
+  mcp: mcp/1more-mcp.yml

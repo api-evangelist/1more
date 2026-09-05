@@ -1,0 +1,141 @@
+generated: '2026-09-05'
+method: probed
+source: live probe of every host this record knows, 2026-09-05
+note: >-
+  usa.1more.com (1MORE's US direct-to-consumer storefront, Shopify-hosted under
+  1MORE's own domain and merchant identity) serves a real discovery surface: OAuth
+  2.0 / OpenID Connect metadata for Shopify customer accounts and a Universal
+  Commerce Protocol merchant profile. The corporate site www.1more.com and the
+  1morestore.com storefront serve nothing at any probed path. No security.txt, no
+  api-catalog, no apis.json, no agent card on any host.
+path_echo_control: passed
+soft_404_control:
+  note: >-
+    Each host was also asked for /.well-known/1more-negative-control-7f3ab91c.json,
+    a path that cannot exist. All three returned 404, so no host is a path-echoing
+    or catch-all 200 responder and the 200s recorded below are real documents.
+hit_count: 4
+hosts:
+- host: https://usa.1more.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: 1more-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: 1more-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: 1more-oauth-protected-resource.json
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/ucp
+    status: 200
+    file: 1more-ucp.json
+  - path: /.well-known/ucp.json
+    status: 200
+    file: 1more-ucp.json
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/1more-negative-control-7f3ab91c.json
+    status: 404
+- host: https://www.1more.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/ucp
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/1more-negative-control-7f3ab91c.json
+    status: 404
+- host: https://www.1morestore.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/ucp
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/1more-negative-control-7f3ab91c.json
+    status: 404
+- host: https://shopify.com/authentication/11404626
+  note: >-
+    Named in authorization_servers[] by usa.1more.com's oauth-protected-resource
+    document. This is Shopify's platform authorization server for 1MORE's shop id
+    11404626, not a host 1MORE operates; recorded because the record's auth chain
+    resolves here.
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: 1more-openid-configuration.json
+- host: https://1more.com
+  note: Apex returned HTTP 504 from the origin on every request; not probed further.
+  documents:
+  - path: /.well-known/security.txt
+    status: 504
+- host: https://global.1more.com
+  note: DNS/connection failure (curl exit code 6/7, no HTTP response). Host does not resolve to a reachable origin.
+  documents:
+  - path: /.well-known/security.txt
+    status: 0

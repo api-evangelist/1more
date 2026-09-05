@@ -1,0 +1,125 @@
+generated: '2026-09-05'
+method: derived
+source: >-
+  mcp/1more-ucp-tools-list.json (the verbatim tools/list response from
+  https://usa.1more.com/api/ucp/mcp), plus the observed shape of
+  https://usa.1more.com/products.json
+note: >-
+  Derived from the JSON Schema 2020-12 input schemas the MCP endpoint itself published,
+  not from any prose. There is no OpenAPI, so there are no $ref graphs and no response
+  schemas to read - every entity and relationship below is grounded in a field that
+  appears verbatim in a tool input schema or in an observed /products.json body. Where a
+  relationship is implied by an id string rather than an embedded object it is marked so.
+entities:
+- name: product
+  identified_by: catalog.id
+  tools: [search_catalog, lookup_catalog, get_product]
+  fields_observed: [id, title, handle, variants, options, images, tags, product_type, vendor]
+  fields_source: https://usa.1more.com/products.json
+  id_prefix: null
+  note: >-
+    get_product accepts catalog.id plus a `selected[]` list of {name,label} option
+    selections, which is how a variant is resolved from a product.
+- name: variant
+  identified_by: variant id (Shopify gid or numeric id)
+  parent: product
+  fields_observed: [id, title, price, available, options]
+  note: Expressed inside product.variants[] in the read-only JSON; addressed through catalog.selected[] in the MCP tools.
+- name: cart
+  identified_by: id
+  tools: [create_cart, get_cart, update_cart, cancel_cart]
+  fields: [line_items, buyer, context, attribution, fulfillment, discounts]
+- name: line_item
+  identified_by: id
+  parent: cart
+  fields: [id, quantity, item]
+- name: buyer
+  identified_by: email
+  fields: [email, phone_number]
+- name: checkout
+  identified_by: id
+  id_format: 'gid://shopify/Checkout/abc123'
+  tools: [create_checkout, get_checkout, update_checkout, complete_checkout, cancel_checkout]
+  fields: [line_items, buyer, payment, fulfillment, discounts, totals, taxes]
+- name: payment_instrument
+  parent: checkout
+  fields: [id, handler_id, type, billing_address, credential]
+  handlers: [com.google.pay, dev.shopify.card]
+- name: address
+  fields: [street_address, extended_address, address_locality, address_region, postal_code, address_country, first_name]
+  note: address_country is ISO 3166-1 alpha-2.
+- name: money
+  fields: [amount, currency]
+  note: amount is an integer in ISO 4217 minor units; currency is an ISO 4217 code.
+- name: order
+  identified_by: id
+  tools: [get_order]
+  note: Read-only in this surface. No create, cancel or refund operation for an order exists in tools/list.
+- name: discount
+  parent: [cart, checkout]
+  fields: [codes]
+- name: fulfillment
+  parent: [cart, checkout]
+  fields: [methods]
+  config_observed: 'method_combinations [["shipping"]], multi_destination []'
+  source: well-known/1more-ucp.json
+- name: attribution
+  parent: cart
+  fields: [referring_domain, click_id_tag, click_id_value, activity_id_tag, activity_id_value, utm_campaign, utm_source, utm_medium, utm_content, utm_term]
+relationships:
+- from: product
+  to: variant
+  kind: has_many
+  via: variants[]
+- from: cart
+  to: line_item
+  kind: has_many
+  via: cart.line_items[]
+- from: line_item
+  to: variant
+  kind: belongs_to
+  via: line_items[].id
+  confidence: medium
+  note: The line item id addresses the purchasable item; the schema does not name the target entity explicitly.
+- from: cart
+  to: buyer
+  kind: has_one
+  via: cart.buyer
+- from: cart
+  to: discount
+  kind: has_one
+  via: cart.discounts.codes[]
+- from: cart
+  to: fulfillment
+  kind: has_one
+  via: cart.fulfillment.methods[]
+- from: cart
+  to: attribution
+  kind: has_one
+  via: cart.attribution
+- from: checkout
+  to: cart
+  kind: belongs_to
+  via: create_checkout from an existing cart
+  confidence: medium
+  note: >-
+    The UCP capability graph declares dev.ucp.shopping.fulfillment and .discount as
+    extending both dev.ucp.shopping.checkout and dev.ucp.shopping.cart, which is the
+    evidence for the two being distinct-but-linked stages rather than one entity.
+- from: checkout
+  to: payment_instrument
+  kind: has_many
+  via: checkout.payment.instruments[]
+- from: payment_instrument
+  to: address
+  kind: has_one
+  via: billing_address
+- from: checkout
+  to: order
+  kind: has_one
+  via: complete_checkout
+  note: Completing a checkout is what produces an order; get_order then reads it by id.
+coverage:
+  entities: 13
+  relationships: 11
+  grounded_in: 13 MCP tool input schemas + one observed products.json body

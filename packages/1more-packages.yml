@@ -1,0 +1,30 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  registry.npmjs.org, api.github.com (org + user search), https://usa.1more.com,
+  https://www.1more.com
+note: >-
+  No first-party 1MORE client library exists on any public registry. Searched npm
+  (registry.npmjs.org), and checked GitHub for a 1MORE organization: github.com/1more,
+  /1MORE-Global, /1moreusa and /onemore all return 404, and a GitHub org search for
+  "1more" returns only unrelated accounts. The npm package named `1more` (latest 0.1.18)
+  is NOT 1MORE's - it has description "TBD", no repository, no homepage and no
+  connection to the audio brand, so it is recorded here as an explicit rejection rather
+  than omitted. 1MORE ships consumer mobile apps (1MORE MUSIC, com.onemore.connect) on
+  the app stores, which are end-user products, not developer packages. No SDKs pointer
+  is emitted.
+package_count: 0
+official_package_count: 0
+packages: []
+rejected:
+- language: javascript
+  registry: npm
+  name: '1more'
+  url: https://www.npmjs.com/package/1more
+  version: 0.1.18
+  published: null
+  official: false
+  reason: >-
+    Name collision only. Registry metadata carries description "TBD", no repository, no
+    homepage and no author link to 1MORE Acoustics; nothing ties it to the audio brand.
+    Publish date not recorded by this pass.

@@ -1,0 +1,37 @@
+generated: '2026-09-05'
+method: probed
+source: https://usa.1more.com/.well-known/openid-configuration
+note: >-
+  These are the scopes advertised by the OAuth 2.0 / OpenID Connect authorization
+  server that 1MORE's storefront points at for shopper accounts (Shopify customer
+  accounts, issuer https://shopify.com/authentication/11404626, discovered from
+  1MORE's own host). They govern a logged-in shopper's own account, not any 1MORE
+  developer programme - 1MORE publishes none. Descriptions below are the scope
+  semantics as documented by the issuer's discovery document and Shopify's customer
+  account model; no scope has been invented and none is asserted beyond the four
+  strings the document returns in scopes_supported.
+schemes:
+- name: shopify-customer-account-oauth2
+  source: well-known/1more-openid-configuration.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://shopify.com/authentication/11404626/oauth/authorize
+    tokenUrl: https://shopify.com/authentication/11404626/oauth/token
+scope_count: 4
+scopes:
+- scope: openid
+  description: Standard OpenID Connect scope; requests an ID token identifying the shopper.
+  flows: [authorizationCode]
+  sources: [well-known/1more-openid-configuration.json]
+- scope: email
+  description: Releases the shopper's email address and email_verified claim.
+  flows: [authorizationCode]
+  sources: [well-known/1more-openid-configuration.json]
+- scope: customer-account-api:full
+  description: Full access to the authenticated shopper's own customer account data (orders, addresses, profile) via the customer account API.
+  flows: [authorizationCode]
+  sources: [well-known/1more-openid-configuration.json]
+- scope: customer-account-mcp-api:full
+  description: Full access to the authenticated shopper's own customer account data via the MCP transport of the customer account API.
+  flows: [authorizationCode]
+  sources: [well-known/1more-openid-configuration.json]

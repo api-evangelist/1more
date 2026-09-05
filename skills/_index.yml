@@ -1,0 +1,26 @@
+generated: '2026-09-05'
+method: generated
+source: >-
+  Grounded in mcp/1more-ucp-tools-list.json — the verbatim tools/list response from
+  https://usa.1more.com/api/ucp/mcp — and in the store's own published agent guidance at
+  https://usa.1more.com/agents.md. Every tool name referenced in these skills appears in
+  that response; none is invented.
+note: >-
+  1MORE publishes no skills of its own. It does publish an agent-facing agents.md /
+  llms.txt (saved verbatim at llms/1more-agents.md and llms/1more-llms.txt) which
+  recommends the third-party Shop skill at https://shop.app/SKILL.md for cross-store
+  purchasing. These two skills are API Evangelist-authored operating instructions for
+  1MORE's own endpoint, not a provider publication.
+skills:
+- file: 1more-browse-catalog.md
+  name: Browse the 1MORE catalog
+  api: mcp/1more-mcp.yml
+  operations: [search_catalog, lookup_catalog, get_product]
+- file: 1more-cart-and-checkout.md
+  name: Build a 1MORE cart and take it to checkout
+  api: mcp/1more-mcp.yml
+  operations: [create_cart, get_cart, update_cart, cancel_cart, create_checkout, get_checkout, update_checkout, complete_checkout, cancel_checkout, get_order]
+provider_published:
+- file: ../llms/1more-agents.md
+  source: https://usa.1more.com/agents.md
+  method: searched

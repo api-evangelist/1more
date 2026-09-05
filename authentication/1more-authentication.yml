@@ -1,0 +1,76 @@
+generated: '2026-09-05'
+method: probed
+source: >-
+  https://usa.1more.com/.well-known/openid-configuration,
+  https://usa.1more.com/.well-known/oauth-authorization-server,
+  https://usa.1more.com/.well-known/oauth-protected-resource,
+  https://usa.1more.com/api/ucp/mcp (anonymous tools/list, HTTP 200)
+note: >-
+  1MORE publishes no developer API and therefore no API-key programme. Two distinct
+  auth postures exist on its storefront host and they should not be conflated. (1) The
+  agent commerce surface - the MCP endpoint at /api/ucp/mcp and the read-only product
+  JSON endpoints - is ANONYMOUS: tools/list, initialize, /products.json and
+  /collections/{handle}/products.json all answered HTTP 200 with no credentials on
+  2026-09-05. Authorization for a purchase is not a token; it is a contemporaneous
+  human buyer approval at the payment step, stated in the store's own agents.md.
+  (2) Shopper accounts use OAuth 2.0 authorization-code + PKCE against Shopify's
+  customer-account authorization server, discovered from RFC 8414 / OIDC metadata
+  served on 1MORE's own host but issued by shopify.com on 1MORE's behalf.
+summary:
+  types:
+  - none
+  - oauth2
+  - openIdConnect
+  api_key_in: []
+  oauth2_flows:
+  - authorizationCode
+  agent_surface_auth: none
+  human_approval_required_for: [complete_checkout]
+schemes:
+- name: anonymous-agent-commerce
+  type: none
+  applies_to:
+  - https://usa.1more.com/api/ucp/mcp
+  - https://usa.1more.com/products.json
+  - https://usa.1more.com/collections/{handle}/products.json
+  - https://usa.1more.com/products/{handle}.json
+  evidence: probed 2026-09-05, HTTP 200 with no Authorization header
+  sources:
+  - mcp/1more-ucp-tools-list.json
+- name: shopify-customer-account-oauth2
+  type: oauth2
+  scheme: bearer
+  bearer_methods_supported:
+  - header
+  flows:
+  - flow: authorizationCode
+    issuer: https://shopify.com/authentication/11404626
+    authorizationUrl: https://shopify.com/authentication/11404626/oauth/authorize
+    tokenUrl: https://shopify.com/authentication/11404626/oauth/token
+    jwksUri: https://shopify.com/authentication/11404626/.well-known/jwks.json
+    endSessionEndpoint: https://shopify.com/authentication/11404626/logout
+    code_challenge_methods_supported:
+    - S256
+    token_endpoint_auth_methods_supported:
+    - client_secret_basic
+    - client_secret_post
+    scopes:
+    - openid
+    - email
+    - customer-account-api:full
+    - customer-account-mcp-api:full
+  protected_resource: https://usa.1more.com
+  sources:
+  - well-known/1more-openid-configuration.json
+  - well-known/1more-oauth-authorization-server.json
+  - well-known/1more-oauth-protected-resource.json
+- name: shopify-customer-account-oidc
+  type: openIdConnect
+  openIdConnectUrl: https://usa.1more.com/.well-known/openid-configuration
+  id_token_signing_alg_values_supported:
+  - RS256
+  subject_types_supported:
+  - public
+  claims_supported: [iss, sub, aud, exp, iat, nonce, sid, email, email_verified]
+  sources:
+  - well-known/1more-openid-configuration.json

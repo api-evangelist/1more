@@ -1,0 +1,43 @@
+generated: '2026-09-05'
+method: probed
+source: https://usa.1more.com/.well-known/ucp, https://usa.1more.com/llms.txt
+note: >-
+  1MORE publishes no API versioning policy, deprecation policy, SLA, status page or
+  changelog of its own. The only lifecycle signal that exists is the protocol version
+  negotiation its UCP discovery document performs, which is a real and dated one.
+versioning:
+  scheme: dated protocol version negotiated via /.well-known/ucp
+  current: '2026-08-25'
+  supported:
+  - version: '2026-08-25'
+    role: latest stable
+    spec: https://ucp.dev/2026-08-25/specification/overview/
+  - version: '2026-04-08'
+    discovery: https://1moreusa.myshopify.com/.well-known/ucp/2026-04-08
+  - version: '2026-01-23'
+    discovery: https://1moreusa.myshopify.com/.well-known/ucp/2026-01-23
+  docs: https://usa.1more.com/llms.txt
+  note: >-
+    Older versions remain individually resolvable at their own discovery URLs, which is
+    a de facto support window; no retirement date is published for any of them.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No deprecation policy, Sunset header or RFC 8594 support is published.
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+status_page_note: >-
+  1MORE publishes no status page. The storefront runs on Shopify, whose platform status
+  page is a third party's and is therefore NOT recorded as 1MORE's - no StatusPage
+  pointer is emitted.
+changelog: null
+changelog_note: >-
+  No dated API or product changelog was found on any 1MORE host. The store's /blogs/news
+  is marketing content, not a change record.
+product_lifecycle:
+  warranty: 1MORE USA Inc. one (1) year limited warranty from date of purchase
+  returns: 30 days from purchase date for refund or exchange
+  docs: https://usa.1more.com/policies/refund-policy
+deprecated_operations: []

@@ -1,0 +1,53 @@
+generated: '2026-09-05'
+method: probed
+source: >-
+  https://usa.1more.com/llms.txt, https://usa.1more.com/api/ucp/mcp,
+  observed responses 2026-09-05
+format: jsonrpc-2.0
+note: >-
+  1MORE publishes no error reference. There is no OpenAPI to derive 4xx/5xx responses
+  from and no application/problem+json surface. What is recorded below is only what
+  was actually observed or explicitly documented by the store's own agents.md/llms.txt:
+  the JSON-RPC error envelope of the MCP endpoint and the one HTTP status the store
+  tells agents to handle. No error code, title or remediation has been invented.
+envelope:
+  agent_surface:
+    shape: JSON-RPC 2.0 error object
+    fields: [jsonrpc, id, error.code, error.message, error.data]
+    content_type: application/json; charset=utf-8
+  storefront:
+    shape: HTTP status code with an HTML body
+    note: >-
+      A missing storefront path returns HTTP 404 with a rendered HTML page, not a
+      machine-readable body. /apis.yml returned 404 with a 769KB HTML storefront body,
+      so agents must read the status line, never the body shape.
+problems:
+- status: 429
+  title: Rate limited
+  documented: true
+  source: https://usa.1more.com/llms.txt
+  remediation: >-
+    "The MCP endpoint is rate-limited per IP. Back off on 429 responses." No
+    Retry-After header was observed on the successful probes; the published guidance is
+    exponential back-off.
+- status: 404
+  title: Not found
+  documented: false
+  observed: true
+  remediation: Storefront paths that do not exist return 404 with an HTML body.
+- status: 504
+  title: Gateway timeout
+  documented: false
+  observed: true
+  note: >-
+    The apex host https://1more.com returned HTTP 504 on every request on 2026-09-05.
+    Agents should use https://www.1more.com (corporate) or https://usa.1more.com (store).
+undocumented:
+  jsonrpc_error_codes: >-
+    The MCP endpoint's JSON-RPC error code set (invalid params, unknown tool, checkout
+    already completed, out of stock, payment declined) is not published by 1MORE and was
+    not exercised - probing it would require creating carts and checkouts against a live
+    production store. Recorded as an honest gap, not guessed.
+  decline_codes: >-
+    Not applicable as a first-party artifact. Payment is handled by the store's payment
+    handlers (Google Pay and Shopify card); 1MORE publishes no decline-code reference.

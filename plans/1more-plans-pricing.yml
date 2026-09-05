@@ -1,0 +1,21 @@
+generated: '2026-09-05'
+method: searched
+source: https://usa.1more.com/, https://usa.1more.com/agents.md
+note: >-
+  1MORE is a consumer hardware brand. Its agent-facing surface is a retail storefront,
+  not a metered API product: there is no developer plan, no free tier, no paid tier and
+  no contact-sales API gate, because there is no API product to price. The MCP endpoint
+  and the read-only product JSON endpoints are open to anonymous agents at no charge.
+  What the site does price is physical merchandise, which is product pricing rather than
+  API pricing and is deliberately not modelled as a plan here. An honest zero.
+plan_count: 0
+plans: []
+pricing_model: none
+free_to_call: true
+evidence:
+- url: https://usa.1more.com/api/ucp/mcp
+  status: 200
+  note: anonymous tools/list, no billing or key required
+- url: https://usa.1more.com/products.json
+  status: 200
+  note: anonymous read-only catalog

@@ -1,0 +1,192 @@
+generated: '2026-09-05'
+method: probed
+source: https://usa.1more.com/api/ucp/mcp (JSON-RPC tools/list, HTTP 200, 2026-09-05)
+status: published
+note: '1MORE''s US storefront serves a live, anonymous remote MCP endpoint on its own domain. It was discovered
+  from https://usa.1more.com/llms.txt, confirmed by the Universal Commerce Protocol merchant profile at
+  https://usa.1more.com/.well-known/ucp (merchant_name "1MORE", merchant_origin usa.1more.com, shop id
+  11404626), and probed directly: initialize and tools/list both returned HTTP 200 with no credentials.
+  The 13 tools below are the verbatim tool names, descriptions and input-schema shapes returned by that
+  endpoint; the full response including every JSON Schema 2020-12 inputSchema is saved verbatim to mcp/1more-ucp-tools-list.json.
+  The implementation is Shopify''s UCP/MCP stack running under 1MORE''s domain and merchant identity,
+  not software 1MORE authored - the endpoint, the catalog it returns and the merchant of record are 1MORE''s.'
+deployment:
+  mode: remote
+  endpoint: https://usa.1more.com/api/ucp/mcp
+  auth: none
+  verified: probed
+  note: 'tools/list and initialize answer anonymously over HTTP POST with Content-Type: application/json.
+    No install step, no package, no stdio variant is published. The UCP discovery document also advertises
+    the same endpoint on the platform origin https://1moreusa.myshopify.com/api/ucp/mcp. Completing a
+    checkout requires contemporaneous buyer approval per the store''s own agents.md; browsing and cart
+    operations do not.'
+server:
+  name: 1more-ucp-shopping
+  transport: http
+  url: https://usa.1more.com/api/ucp/mcp
+  protocol: Universal Commerce Protocol (UCP) dev.ucp.shopping service, transport mcp
+  ucp_version: '2026-08-25'
+  ucp_supported_versions:
+  - '2026-08-25'
+  - '2026-04-08'
+  - '2026-01-23'
+  openrpc_schema: https://ucp.dev/2026-08-25/services/shopping/mcp.openrpc.json
+  discovery: https://usa.1more.com/.well-known/ucp
+capabilities_declared:
+- dev.ucp.shopping.cart
+- dev.ucp.shopping.checkout
+- dev.ucp.shopping.fulfillment
+- dev.ucp.shopping.discount
+- dev.ucp.shopping.order
+- dev.ucp.shopping.catalog.search
+- dev.ucp.shopping.catalog.lookup
+- dev.shopify.catalog
+tool_count: 13
+tools:
+- name: get_checkout
+  description: Returns details about the checkout, including line items, totals, and any applicable discounts
+    or taxes.
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - id
+  input_schema_properties:
+  - meta
+  - id
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: create_checkout
+  description: Creates a checkout. Returns checkout details, including line items, totals, and any applicable
+    discounts or taxes.
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - checkout
+  input_schema_properties:
+  - meta
+  - checkout
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: update_checkout
+  description: Updates a checkout. Returns checkout details, including line items, totals, and any applicable
+    discounts or taxes.
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - checkout
+  - id
+  input_schema_properties:
+  - meta
+  - checkout
+  - id
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: complete_checkout
+  description: Completes a checkout and returns the checkout result. Returns details about the completed
+    checkout, including order ID, Thank You Page URL, or any errors encountered.
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - id
+  - checkout
+  input_schema_properties:
+  - meta
+  - checkout
+  - id
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: cancel_checkout
+  description: Cancels a checkout.
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - id
+  input_schema_properties:
+  - meta
+  - id
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: get_cart
+  description: Get the cart contents
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - id
+  input_schema_properties:
+  - meta
+  - id
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: create_cart
+  description: Creates a new cart
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - cart
+  input_schema_properties:
+  - meta
+  - cart
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: update_cart
+  description: Perform updates to a cart.
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - cart
+  - id
+  input_schema_properties:
+  - meta
+  - cart
+  - id
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: cancel_cart
+  description: Cancels a cart.
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - id
+  input_schema_properties:
+  - meta
+  - id
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: get_order
+  description: Get the details of an order
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - id
+  input_schema_properties:
+  - meta
+  - id
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: search_catalog
+  description: Search for products from the online store, hosted on Shopify.
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - catalog
+  input_schema_properties:
+  - meta
+  - catalog
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: lookup_catalog
+  description: Look up multiple products or variants by identifier.
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - catalog
+  input_schema_properties:
+  - meta
+  - catalog
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+- name: get_product
+  description: Retrieve complete product detail by identifier. Returns a singular product
+  input_schema_present: true
+  input_schema_required:
+  - meta
+  - catalog
+  input_schema_properties:
+  - meta
+  - catalog
+  source: mcp/1more-ucp-tools-list.json#/result/tools
+x-evidence:
+  fetched: '2026-09-05'
+  url: https://usa.1more.com/api/ucp/mcp
+  method: POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}
+  http_status: 200
+  content_type: application/json; charset=utf-8
+  response_bytes: 52135
