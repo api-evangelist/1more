@@ -1,16 +1,14 @@
 aid: 1more
 name: 1MORE
-description: '1MORE (万魔声学 / 1MORE Acoustics Technology Co., Ltd., founded 2013, with
-  operations in China, the United States and the United Kingdom) is a consumer audio
-  brand that designs and sells wired and wireless earbuds, on-ear and over-ear headphones,
-  open-ear sport earbuds and companion mobile apps. 1MORE publishes no developer program
-  or public product API. Its machine-readable surface is its own direct-to-consumer
-  storefront at usa.1more.com, which serves an agent-facing llms.txt/agents.md, a
-  Universal Commerce Protocol (UCP) merchant profile at /.well-known/ucp, an anonymous
-  remote MCP endpoint at /api/ucp/mcp exposing 13 catalog, cart, checkout and order
-  tools, OAuth 2.0 / OpenID Connect discovery documents for Shopify customer accounts,
-  and read-only JSON product endpoints. That surface is Shopify''s UCP implementation
-  running under 1MORE''s own domain and merchant identity.'
+description: 1MORE (万魔声学 / 1MORE Acoustics Technology Co., Ltd., founded 2013, with operations in China,
+  the United States and the United Kingdom) is a consumer audio brand that designs and sells wired and
+  wireless earbuds, on-ear and over-ear headphones, open-ear sport earbuds and companion mobile apps.
+  1MORE publishes no developer program or public product API. Its machine-readable surface is its own
+  direct-to-consumer storefront at usa.1more.com, which serves an agent-facing llms.txt/agents.md, a Universal
+  Commerce Protocol (UCP) merchant profile at /.well-known/ucp, an anonymous remote MCP endpoint at /api/ucp/mcp
+  exposing 13 catalog, cart, checkout and order tools, OAuth 2.0 / OpenID Connect discovery documents
+  for Shopify customer accounts, and read-only JSON product endpoints. That surface is Shopify's UCP implementation
+  running under 1MORE's own domain and merchant identity.
 url: https://raw.githubusercontent.com/api-evangelist/1more/refs/heads/main/apis.yml
 image: https://usa.1more.com/cdn/shop/files/logo_7d70adc1-01a8-4223-aca7-d56748c230de.png?height=628&pad_color=ffffff&v=1698057387&width=1200
 x-type: company
@@ -30,24 +28,38 @@ tags:
 - E-Commerce
 - Agent Commerce
 - Universal Commerce Protocol
+- MCP
+- Shopify
+tags_raw:
+- Company
+- Consumer Electronics
+- Audio
+- Headphones
+- Retail
+- E-Commerce
+- Agent Commerce
+- Universal Commerce Protocol
 - Model Context Protocol
 - Shopify
 apis:
-- aid: 1more-storefront-agent-commerce
+- aid: 1more:1more-storefront-agent-commerce
   name: 1MORE Storefront Agent Commerce (UCP/MCP)
-  description: The agent-facing commerce interface 1MORE serves from its own US storefront
-    host. A Universal Commerce Protocol merchant profile at /.well-known/ucp declares
-    the supported UCP versions, services and payment handlers under merchant name "1MORE";
-    a remote MCP endpoint at https://usa.1more.com/api/ucp/mcp answers tools/list
-    anonymously with 13 tools (catalog search/lookup/product detail, cart, checkout
-    and order) carrying real JSON Schema 2020-12 input schemas. Read-only product
-    JSON is available at /products.json and /collections/{handle}/products.json. The
-    implementation is Shopify's UCP/MCP stack operating under 1MORE's domain and
-    merchant identity; checkout requires contemporaneous buyer approval.
+  description: The agent-facing commerce interface 1MORE serves from its own US storefront host. A Universal
+    Commerce Protocol merchant profile at /.well-known/ucp declares the supported UCP versions, services
+    and payment handlers under merchant name "1MORE"; a remote MCP endpoint at https://usa.1more.com/api/ucp/mcp
+    answers tools/list anonymously with 13 tools (catalog search/lookup/product detail, cart, checkout
+    and order) carrying real JSON Schema 2020-12 input schemas. Read-only product JSON is available at
+    /products.json and /collections/{handle}/products.json. The implementation is Shopify's UCP/MCP stack
+    operating under 1MORE's domain and merchant identity; checkout requires contemporaneous buyer approval.
   humanURL: https://usa.1more.com/agents.md
   image: https://usa.1more.com/cdn/shop/files/logo_7d70adc1-01a8-4223-aca7-d56748c230de.png?height=628&pad_color=ffffff&v=1698057387&width=1200
   baseURL: https://usa.1more.com
   tags:
+  - Agent Commerce
+  - Universal Commerce Protocol
+  - MCP
+  - E-Commerce
+  tags_raw:
   - Agent Commerce
   - Universal Commerce Protocol
   - Model Context Protocol
@@ -64,12 +76,6 @@ x-enrichment:
   status: enriched
   artifacts_added: 24
   pass: local-v3
-# BASE URL NOTE:
-# repair-api-bases.py flags baseURL https://usa.1more.com as a "marketing-base" because it equals
-# the website host. That flag is a false positive here and the base is deliberately left as-is:
-# 1MORE's machine-readable endpoints are served from the storefront origin itself
-# (/api/ucp/mcp, /.well-known/ucp, /products.json), which the store's own agents.md states. There
-# is no separate api.* host - api.1more.com, developer.1more.com and docs.1more.com do not resolve.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
