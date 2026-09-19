@@ -26,7 +26,7 @@ tags:
 - Headphones
 - Retail
 - E-Commerce
-- Agent Commerce
+- Agentic Commerce
 - Universal Commerce Protocol
 - MCP
 - Shopify
@@ -55,7 +55,7 @@ apis:
   image: https://usa.1more.com/cdn/shop/files/logo_7d70adc1-01a8-4223-aca7-d56748c230de.png?height=628&pad_color=ffffff&v=1698057387&width=1200
   baseURL: https://usa.1more.com
   tags:
-  - Agent Commerce
+  - Agentic Commerce
   - Universal Commerce Protocol
   - MCP
   - E-Commerce
