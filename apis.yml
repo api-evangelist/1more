@@ -53,7 +53,6 @@ apis:
     operating under 1MORE's domain and merchant identity; checkout requires contemporaneous buyer approval.
   humanURL: https://usa.1more.com/agents.md
   image: https://usa.1more.com/cdn/shop/files/logo_7d70adc1-01a8-4223-aca7-d56748c230de.png?height=628&pad_color=ffffff&v=1698057387&width=1200
-  baseURL: https://usa.1more.com
   tags:
   - Agentic Commerce
   - Universal Commerce Protocol
@@ -71,6 +70,9 @@ apis:
     url: https://usa.1more.com/agents.md
   - type: LLMsTxt
     url: llms/1more-llms.txt
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 x-enrichment:
   date: '2026-09-05'
   status: enriched
