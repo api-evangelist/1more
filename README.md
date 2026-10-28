@@ -64,24 +64,122 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-1MORE (万魔声学 / 1MORE Acoustics Technology Co., Ltd., founded 2013) is a consumer audio brand
-selling wired and wireless earbuds, on-ear and over-ear headphones and open-ear sport earbuds, with
-operations in China, the United States and the United Kingdom.
+1MORE (万魔声学 / 1MORE Acoustics Technology Co., Ltd., founded 2013, with operations in China, the United States and the United Kingdom) is a consumer audio brand that designs and sells wired and wireless earbuds, on-ear and over-ear headphones, open-ear sport earbuds and companion mobile apps. 1MORE publishes no developer program or public product API. Its machine-readable surface is its own direct-to-consumer storefront at usa.1more.com, which serves an agent-facing llms.txt/agents.md, a Universal Commerce Protocol (UCP) merchant profile at /.well-known/ucp, an anonymous remote MCP endpoint at /api/ucp/mcp exposing 13 catalog, cart, checkout and order tools, OAuth 2.0 / OpenID Connect discovery documents for Shopify customer accounts, and read-only JSON product endpoints. That surface is Shopify's UCP implementation running under 1MORE's own domain and merchant identity.
 
-**1MORE publishes no developer program and no product API.** What it does publish — and what this
-profile is built from — is a genuine agent-facing commerce surface on its own US storefront host:
+**Areas:** Company · Consumer Electronics · Audio · Headphones · Retail · E-Commerce · Agentic Commerce · Universal Commerce Protocol · MCP · Shopify
 
-- `https://usa.1more.com/llms.txt` and `/agents.md` — agent instructions the store serves itself
-- `https://usa.1more.com/.well-known/ucp` — a Universal Commerce Protocol merchant profile,
-  UCP `2026-08-25`, merchant name **1MORE**, merchant origin `usa.1more.com`
-- `https://usa.1more.com/api/ucp/mcp` — a live remote **MCP** endpoint that answers `tools/list`
-  anonymously with 13 catalog, cart, checkout and order tools carrying real JSON Schema 2020-12
-  input schemas
-- OAuth 2.0 / OpenID Connect discovery documents for shopper accounts
-- read-only product JSON at `/products.json` and `/collections/{handle}/products.json`
+## 1MORE on APIs.io
 
-That stack is Shopify's UCP implementation running under 1MORE's own domain and merchant identity.
-The endpoint, the catalog it returns and the merchant of record are 1MORE's; the protocol
-implementation is the platform's. Every artifact here says which is which.
+Everything profiled for 1MORE is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/1more/](https://apis.io/providers/1more/)** — or go straight to one of the APIs or properties below.
 
-Company sites: <https://usa.1more.com/> (US store) · <https://www.1more.com/index.html> (corporate)
+### APIs (1)
+
+- [1MORE Storefront Agent Commerce (UCP/MCP)](https://apis.io/apis/1more/1more-storefront-agent-commerce/) — The agent-facing commerce interface 1MORE serves from its own US storefront host. A Universal Commerce Protocol merchant profile at /.well-known/ucp…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [1more-ucp-shopping](https://apis.io/servers/1more/1more-ucp-shopping/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [1More Agentic Access](https://apis.io/agentic-access/1more/1more-agentic-access/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [1More Authentication](https://apis.io/security/1more/1more-authentication/)
+- [1More Domain Security](https://apis.io/security/1more/1more-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [1More Scopes](https://apis.io/scopes/1more/1more-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [1More Plans Pricing](https://apis.io/plans/1more/1more-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [1More Rate Limits](https://apis.io/rate-limits/1more/1more-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://usa.1more.com/)
+- [Documentation](https://usa.1more.com/agents.md)
+- [Sign up](https://usa.1more.com/account/register)
+- [Support](https://usa.1more.com/pages/contact-us)
+- [Blog](https://usa.1more.com/blogs/news)
+- [Terms of service](https://usa.1more.com/policies/terms-of-service)
+- [Privacy policy](https://usa.1more.com/policies/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 24.7** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.7 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 30.4 |
+| Access clarity | 34.2 |
+
+**Agent readiness 28.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | platform (partial credit) |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/1more/](https://apis.io/providers/1more/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for 1MORE: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/1more/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
