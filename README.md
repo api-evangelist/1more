@@ -90,32 +90,32 @@ Model Context Protocol servers that expose the API to agents.
 
 Which operations an agent can call, which act, and which need a human in the loop.
 
-- [1More Agentic Access](https://apis.io/agentic-access/1more/1more-agentic-access/)
+- [1MORE Agentic Access](https://apis.io/agentic-access/1more/1more-agentic-access/)
 
 #### Security (2)
 
 Authentication, trust centre, and vulnerability disclosure.
 
-- [1More Authentication](https://apis.io/security/1more/1more-authentication/)
-- [1More Domain Security](https://apis.io/security/1more/1more-domain-security/)
+- [1MORE Authentication](https://apis.io/security/1more/1more-authentication/)
+- [1MORE Domain Security](https://apis.io/security/1more/1more-domain-security/)
 
 #### OAuth scopes (1)
 
 The permissions the API asks for.
 
-- [1More Scopes](https://apis.io/scopes/1more/1more-scopes/)
+- [1MORE Scopes](https://apis.io/scopes/1more/1more-scopes/)
 
 #### Plans and pricing (1)
 
 Published plans, tiers and prices.
 
-- [1More Plans Pricing](https://apis.io/plans/1more/1more-plans-pricing/)
+- [1MORE Plans Pricing](https://apis.io/plans/1more/1more-plans-pricing/)
 
 #### Rate limits (1)
 
 Published request limits.
 
-- [1More Rate Limits](https://apis.io/rate-limits/1more/1more-rate-limits/)
+- [1MORE Rate Limits](https://apis.io/rate-limits/1more/1more-rate-limits/)
 
 ## Where to find this API
 
@@ -131,7 +131,7 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 24.7** — emerging · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 24.6** — emerging · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
@@ -140,9 +140,9 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Contract governance | 18.2 |
 | Operational transparency | 0.0 |
 | Developer ergonomics | 30.4 |
-| Access clarity | 34.2 |
+| Access clarity | 38.3 |
 
-**Agent readiness 28.8** — agent-ready
+**Agent readiness 28.2** — agent-aware
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -167,8 +167,12 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Agentic Commerce | platform (partial credit) |
 | Pagination Ratio | na |
 | Operation Distinctiveness | na |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | na |
 
-**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+**Regulatory alignment 28.4** — Horizontal (data, software, accessibility, platform)
 
 The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/1more/](https://apis.io/providers/1more/).
 
